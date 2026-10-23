@@ -141,7 +141,7 @@ void set_gp_check_timer(uint32_t task_id) {
 
     TaskQueue::Core0::queue_delayed_task(task_id, UserSettings::GP_CHECK_DELAY_MS, true,
     [&user_settings] {
-        // Check for input source change (Start+Select when in PS1PS2/GAMECUBE mode)
+        // Check for input source change (Start+Select held, any output mode)
         if (user_settings.check_for_input_source_change(_gamepads[0])) {
             // No reboot; input source stored
         }
