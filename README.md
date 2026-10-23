@@ -82,6 +82,8 @@ By default the OGX-Mini will emulate an OG Xbox controller, you must hold a butt
 
 Start = Plus (Switch) = Options (Dualsense/DS4)
 
+Start is always part of the combo. Holding extra buttons does not cancel a combo, and if more than one combo matches, the one with the most buttons wins (e.g. Start + Left Bumper + D-pad Up selects SteamOS / Bazzite, not XInput).
+
 - XInput (Xbox 360)
     - Start + Dpad Up 
 - Original Xbox
@@ -90,10 +92,13 @@ Start = Plus (Switch) = Options (Dualsense/DS4)
     - Start + Dpad Right + Right Bumper
 - Original Xbox DVD Remote
     - Start + Dpad Right + Left Bumper
+    - Only in builds that include the XRemote ROM (`tud_xid_xremote_rom.h`, not part of this repository)
 - Switch (Pro Controller emulation)
     - Start + Dpad Down
 - PlayStation 3
     - Start + Dpad Left
+- DInput
+    - Start + Right Bumper + Dpad Left
 - PlayStation 4 motion (DualShock 4 USB gadget for auth dongles — **not** licensed PS4 console output)
     - Start + Left Bumper + D-pad **Left**
     - Made so **motion controls** work through an **authentication dongle** (e.g. Brook Wingman). This firmware does **not** perform PS4 authentication; plug OGX into a licensed dongle, then the dongle into the PS4.
@@ -106,7 +111,7 @@ Start = Plus (Switch) = Options (Dualsense/DS4)
 - Dreamcast (GPIO output)
     - Start + Y — **Pico W / Pico 2 W + controller cable**; Bluetooth input only (USB-A host out of scope)
 - Wii U (GameCube Adapter)
-      - Start + Left Bumper + D-Pad Down
+    - Start + Left Bumper + D-Pad Down
 - Web Application Mode
     - Start + Left Bumper + Right Bumper
 
@@ -123,6 +128,14 @@ Start = Plus (Switch) = Options (Dualsense/DS4)
 GPIO mode input on Pico W / Pico 2 W is **Bluetooth** only for these modes. No combo switching in fixed Wii / GameCube / N64 builds.
 
 After a new mode is stored, the RP2040 will reset itself so you don't need to unplug it.
+
+## Changing input source
+Holding **Start + Back** (Select / Minus / Share, and no other buttons) for about 2.5 seconds changes where controller input is read from, and stores it:
+
+- In PS1/PS2, GameCube and Dreamcast output modes it toggles between USB and the matching GPIO controller input.
+- In every other output mode it cycles USB → PS1/PS2 GPIO → GameCube GPIO → Dreamcast GPIO → N64 GPIO → USB.
+
+To get back to USB input, hold Start + Back again until the list wraps around to USB.
 
 ## Disconnecting Controllers
 For most controllers pressing and holding Start+Select (+/-, etc) for the controller will disconnect it and restart pairing mode.
